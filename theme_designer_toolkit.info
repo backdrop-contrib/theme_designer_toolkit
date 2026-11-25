@@ -1,0 +1,6 @@
+name = Theme Designer Toolkit
+description = Provides a central interface for discovering and accessing theme design and development tools.
+type = module
+backdrop = 1.x
+package = Development
+version = BACKDROP_VERSION

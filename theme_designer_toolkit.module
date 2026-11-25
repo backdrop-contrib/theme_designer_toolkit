@@ -1,0 +1,103 @@
+<?php
+/**
+ * @file
+ * Provides a central interface for theme design and development tools.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function theme_designer_toolkit_menu() {
+  $items = array();
+
+  $items['admin/appearance/toolkit'] = array(
+    'title' => 'Theme Designer Toolkit',
+    'description' => 'Discover and access theme design and development tools.',
+    'page callback' => 'theme_designer_toolkit_admin_page',
+    'access arguments' => array('access theme designer toolkit'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'theme_designer_toolkit.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function theme_designer_toolkit_permission() {
+  return array(
+    'access theme designer toolkit' => array(
+      'title' => t('Access Theme Designer Toolkit'),
+      'description' => t('Access the theme design and development tools interface.'),
+    ),
+  );
+}
+
+
+
+/**
+ * Loads the available theme design tools.
+ */
+function theme_designer_toolkit_get_tools() {
+  $path = backdrop_get_path('module', 'theme_designer_toolkit');
+
+  $files = array(
+    'public://theme_designer_toolkit/tools.json',
+    $path . '/tools.json',
+  );
+
+  foreach ($files as $file) {
+    if (!is_readable($file)) {
+      continue;
+    }
+
+    $data = json_decode(file_get_contents($file), TRUE);
+
+    if (theme_designer_toolkit_validate_tools($data)) {
+      return $data['tools'];
+    }
+  }
+
+  return array();
+}
+
+
+
+/**
+ * Validates the tools registry structure.
+ */
+function theme_designer_toolkit_validate_tools($data) {
+  if (!is_array($data) ||
+      !isset($data['version'], $data['tools']) ||
+      $data['version'] !== 1 ||
+      !is_array($data['tools'])) {
+    return FALSE;
+  }
+
+  foreach ($data['tools'] as $module => $tool) {
+    if (!is_string($module) ||
+        !preg_match('/^[a-z][a-z0-9_]*$/D', $module) ||
+        !is_array($tool)) {
+      return FALSE;
+    }
+
+    foreach (array('name', 'description', 'project', 'path') as $key) {
+      if (!isset($tool[$key]) || !is_string($tool[$key])) {
+        return FALSE;
+      }
+    }
+
+    if (!valid_url($tool['project'], TRUE) ||
+        strpos($tool['project'], 'https://') !== 0) {
+      return FALSE;
+    }
+
+    if ($tool['path'] !== '' &&
+        !preg_match('#^admin/[a-zA-Z0-9_/-]+$#D', $tool['path'])) {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}

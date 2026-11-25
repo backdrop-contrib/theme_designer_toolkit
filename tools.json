@@ -1,0 +1,24 @@
+
+{
+  "version": 1,
+  "tools": {
+    "devel": {
+      "name": "Devel",
+      "description": "Development and debugging tools for Backdrop CMS.",
+      "project": "https://backdropcms.org/project/devel",
+      "path": "admin/config/development/devel"
+    },
+    "styleguide": {
+      "name": "Style Guide",
+      "description": "Preview and test theme elements and styles.",
+      "project": "https://backdropcms.org/project/styleguide",
+      "path": "admin/appearance/styleguide"
+    },
+    "design_tokens": {
+      "name": "Design Tokens",
+      "description": "Design Tokens is a Backdrop CMS module that provides a modern.",
+      "project": "https://backdropcms.org/project/design_tokens",
+      "path": "admin/appearance/tokens"
+    }
+  }
+}
