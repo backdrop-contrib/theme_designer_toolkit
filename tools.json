@@ -25,6 +25,18 @@
       "description": "A toolkit for theme designers to preview and test theme elements and styles.",
       "project": "https://backdropcms.org/project/css_injector",
       "path": "admin/appearance/css-injector"
+    },
+    "backdrop_theme_setup": {
+    "name": "Theme Setup",
+    "description": "A reusable JSON-based library for importing sample content and configuring Backdrop CMS themes.",
+    "project": "https://github.com/shabib-m/backdrop_theme_setup",
+    "path": ""
+    },
+    "theme_setup_builder": {
+    "name": "Theme Setup Builder",
+    "description": "A tool for exporting site configuration and sample content for use with the Theme Setup library.",
+    "project": "https://github.com/shabib-m/theme_setup_builder",
+    "path": ""
     }
   }
 }
