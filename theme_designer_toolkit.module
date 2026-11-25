@@ -110,7 +110,7 @@ function theme_designer_toolkit_validate_tools($data) {
  *   TRUE on success, or FALSE on failure.
  */
 function theme_designer_toolkit_update_tools() {
-  $url = 'https://raw.githubusercontent.com/shabib-m/theme_designer_toolkit/main/tools.json';
+  $url = 'https://raw.githubusercontent.com/backdrop-contrib/theme_designer_toolkit/main/tools.json';
 
   $response = backdrop_http_request($url, array(
     'timeout' => 10,
