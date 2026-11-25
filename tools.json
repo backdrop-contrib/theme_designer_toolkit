@@ -19,6 +19,12 @@
       "description": "Design Tokens is a Backdrop CMS module that provides a modern.",
       "project": "https://backdropcms.org/project/design_tokens",
       "path": "admin/appearance/tokens"
+    },
+    "css_injector": {
+      "name": "CSS Injector",
+      "description": "A toolkit for theme designers to preview and test theme elements and styles.",
+      "project": "https://backdropcms.org/project/css_injector",
+      "path": "admin/appearance/css-injector"
     }
   }
 }

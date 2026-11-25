@@ -101,3 +101,49 @@ function theme_designer_toolkit_validate_tools($data) {
 
   return TRUE;
 }
+
+
+/**
+ * Downloads and updates the tools registry.
+ *
+ * @return bool
+ *   TRUE on success, or FALSE on failure.
+ */
+function theme_designer_toolkit_update_tools() {
+  $url = 'https://raw.githubusercontent.com/shabib-m/theme_designer_toolkit/main/tools.json';
+
+  $response = backdrop_http_request($url, array(
+    'timeout' => 10,
+    'max_redirects' => 0,
+  ));
+
+  // Check the HTTP response.
+  if ($response->code != 200 || empty($response->data)) {
+    return FALSE;
+  }
+
+  // Validate the downloaded JSON.
+  $data = json_decode($response->data, TRUE);
+
+  if (!theme_designer_toolkit_validate_tools($data)) {
+    return FALSE;
+  }
+
+  // Prepare the local directory.
+  $directory = 'public://theme_designer_toolkit';
+
+  if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+    return FALSE;
+  }
+
+  // Save the validated tools registry.
+  $destination = $directory . '/tools.json';
+
+  $file = file_unmanaged_save_data(
+    $response->data,
+    $destination,
+    FILE_EXISTS_REPLACE
+  );
+
+  return $file !== FALSE;
+}

@@ -65,5 +65,43 @@ function theme_designer_toolkit_admin_page() {
     '#empty' => t('No tools are available.'),
   );
 
+  
+  $build['update'] = backdrop_get_form(
+    'theme_designer_toolkit_update_form'
+   );
+
+
   return $build;
+}
+
+
+/**
+ * Form for updating the tools registry.
+ */
+function theme_designer_toolkit_update_form($form, &$form_state) {
+  $form['actions'] = array(
+    '#type' => 'actions',
+  );
+
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Update tools list'),
+  );
+
+  return $form;
+}
+
+
+/**
+ * Submit handler for the tools update form.
+ */
+function theme_designer_toolkit_update_form_submit($form, &$form_state) {
+  if (theme_designer_toolkit_update_tools()) {
+    backdrop_set_message(t('Tools list updated successfully.'));
+  }
+  else {
+    backdrop_set_message(t('Unable to update the tools list.'), 'error');
+  }
+
+  $form_state['redirect'] = 'admin/appearance/toolkit';
 }
